@@ -1,3 +1,17 @@
-<div class="card mt-4">
-  <h4 class="card-header">You're logged in with Angular & JWT!!</h4>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h4>Planning App</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <app-categories
+        (activeCategoryChange)="activateCategory($event)"
+      ></app-categories>
+    </div>
+    <div class="col-8">
+      <app-items [category]="activeCategory"></app-items>
+    </div>
+  </div>
 </div>

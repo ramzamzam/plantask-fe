@@ -1,0 +1,18 @@
+<ul class="list-group" *ngIf="categories">
+  <li class="list-group-item create-category-input">
+    <div class="input-group">
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <input name="name" type="text" class="form-control" placeholder="Category name" aria-label="Category"
+          ngModel required
+        >
+      </form>
+    </div>
+  </li>
+  <li class="list-group-item" (click)="clearCategory()">View All</li>
+  <li
+    *ngFor="let cat of categories"
+    class="list-group-item"
+    [ngClass]="activeCategory===cat? 'active' : null"
+    (click)="activateCategory(cat)"
+  >{{cat.name}}</li>
+</ul>

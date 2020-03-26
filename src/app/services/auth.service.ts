@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import {AuthenticatedUserDTO} from '../models/cotegory';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class AuthService {
   // TODO: Implement logic for refreshing tokens
   // TODO: Check if tokens are not expired on page refreshing
   // private refreshTokensInteval;
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  private currentUserSubject: BehaviorSubject<AuthenticatedUserDTO>;
+  public currentUser: Observable<AuthenticatedUserDTO>;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
@@ -24,13 +25,13 @@ export class AuthService {
   }
 
   login(email, password) {
-    return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password })
-      .pipe(map(user => {
+    return this.http.post<AuthenticatedUserDTO>(`${environment.apiUrl}/auth/login`, { email, password })
+      .pipe(map(userDTO => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        console.log(this.jwtDecode(user.accessToken));
-        this.currentUserSubject.next(user);
-        return user;
+        localStorage.setItem('currentUser', JSON.stringify(userDTO));
+        console.log(this.jwtDecode(userDTO.accessToken));
+        this.currentUserSubject.next(userDTO);
+        return userDTO;
       }));
   }
 
