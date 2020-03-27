@@ -1,0 +1,31 @@
+<!--<ul class="list-group" *ngIf="categories">-->
+<!--  <li class="list-group-item create-category-input">-->
+<!--    <div class="input-group">-->
+<!--        <input name="name" type="text" class="form-control" placeholder="Category name" aria-label="Category"-->
+<!--          ngModel required [(ngModel)]="filter"  (keyup)="filterDisplayedCategories()"-->
+<!--        >-->
+<!--      <div class="input-group-prepend clickable">-->
+<!--        <span class="input-group-text" id="basic-addon1" (click)="createCategory(filter)">+</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </li>-->
+<!--  <li class="list-group-item" (click)="clearCategory()">View All</li>-->
+<!--  <li-->
+<!--    *ngFor="let cat of displayedCategories"-->
+<!--    class="list-group-item"-->
+<!--    [ngClass]="activeCategory===cat? 'active' : null"-->
+<!--    (click)="activateCategory(cat)"-->
+<!--  >{{cat.name}}</li>-->
+<!--</ul>-->
+
+<div class="sidebar-heading">Categories: <button class="btn btn-success float-right">Add</button></div>
+<div class="list-group list-group-flush list-group-sidebar">
+  <a
+    *ngFor="let cat of displayedCategories"
+    (click)="activateCategory(cat)"
+    [ngClass]="activeCategory===cat? 'active' : null"
+    class="list-group-item list-group-item-action"
+  >
+    {{cat.name}}
+  </a>
+</div>

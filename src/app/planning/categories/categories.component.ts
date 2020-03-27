@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Category} from '../../models/cotegory';
-import {PlanningService} from '../../services/planning.service';
+import {PlanningService} from '../services/planning.service';
 import {first} from 'rxjs/operators';
 import {NgForm} from '@angular/forms';
+import {Category} from '../models/planning.models';
+import {faPlus} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-categories',
@@ -10,15 +11,18 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
+  icons = {
+    faPlus,
+  };
   loading = false;
   categories: Category[];
+  filter: string;
+  displayedCategories: Category[];
   activeCategory: Category;
   @Input() activeCategoryId: number;
   @Output() activeCategoryChange = new EventEmitter<Category>();
 
-  constructor(private planningService: PlanningService) {
-
-  }
+  constructor(private planningService: PlanningService) {}
 
   ngOnInit() {
     this.loading = true;
@@ -27,10 +31,12 @@ export class CategoriesComponent implements OnInit {
 
   async loadCategories() {
     this.categories = await this.planningService.getCategories();
+    this.filterDisplayedCategories();
   }
 
   activateCategory(category: Category) {
     this.activeCategoryId = category.id;
+    this.activeCategory = category;
     this.activeCategoryChange.emit(category);
   }
 
@@ -39,14 +45,18 @@ export class CategoriesComponent implements OnInit {
     this.activeCategoryChange.emit(null);
   }
 
-  async onSubmit(f: NgForm) {
-    const category = await this.createCategory(f.value.name);
-    await this.loadCategories();
-    this.activateCategory(this.categories.find(c => c.id === category.id));
-    f.reset();
+  filterDisplayedCategories() {
+    this.displayedCategories =
+      this.filter
+        ? this.categories.filter(cat => cat.name.toLowerCase().indexOf(this.filter) !== -1)
+        : this.categories;
   }
 
   async createCategory(name: string) {
-    return await this.planningService.createCategory(name);
+    const category = await this.planningService.createCategory(name);
+    await this.loadCategories();
+    this.activateCategory(this.categories.find(c => c.id === category.id));
+    this.filter = '';
+    this.filterDisplayedCategories();
   }
 }

@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/planning']);
     }
   }
 
@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/planning';
   }
 
   get f() { return this.loginForm.controls; }

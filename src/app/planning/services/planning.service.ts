@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {Category, Item} from '../models/cotegory';
+import {environment} from '../../../environments/environment';
+import {Category, Item} from '../models/planning.models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,12 @@ export class PlanningService {
 
   constructor(private http: HttpClient) { }
 
-  private url(resource) { return `${this.baseUrl}/${resource}`; }
+  private url(resource, id?) {
+    const route = `${this.baseUrl}/${resource}`;
+
+    if (id) { return route + `/${id}`; }
+    return route;
+  }
 
   getCategories(): Promise<Category[]> {
     return this.http.get<Category[]>(this.url('category')).toPromise();
@@ -33,5 +38,9 @@ export class PlanningService {
     return this.http.post<Category>(this.url('category'), {
       name
     }).toPromise();
+  }
+
+  async getCategory(categoryId: number): Promise<Category> {
+    return this.http.get<Category>(this.url('category', categoryId)).toPromise();
   }
 }

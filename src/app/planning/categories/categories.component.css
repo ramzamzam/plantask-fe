@@ -1,0 +1,22 @@
+.clickable {
+  cursor: pointer;
+}
+
+.sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+.list-group {
+  width: 15rem;
+}
+
+.list-group-item {
+  background-color: #e2e2e2bf;
+}
+
+.list-group-item.active {
+  background-color: #a0a6ab;
+  color: #495057;
+  border-color: #dae0e5;
+}
