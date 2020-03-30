@@ -18,12 +18,12 @@
 <!--  >{{cat.name}}</li>-->
 <!--</ul>-->
 
-<div class="sidebar-heading">Categories: <button class="btn btn-success float-right">Add</button></div>
+<div class="sidebar-heading">Categories: <button mat-raised-button class="float-right" (click)="openCreateDialog()">Add</button></div>
 <div class="list-group list-group-flush list-group-sidebar">
   <a
     *ngFor="let cat of displayedCategories"
     (click)="activateCategory(cat)"
-    [ngClass]="activeCategory===cat? 'active' : null"
+    [ngClass]="activeCategoryId==cat.id? 'active' : null"
     class="list-group-item list-group-item-action"
   >
     {{cat.name}}

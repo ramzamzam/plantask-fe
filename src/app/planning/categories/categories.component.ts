@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {PlanningService} from '../services/planning.service';
-import {first} from 'rxjs/operators';
-import {NgForm} from '@angular/forms';
-import {Category} from '../models/planning.models';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { PlanningService } from '../services/planning.service';
+import { Category } from '../models/planning.models';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -19,14 +19,39 @@ export class CategoriesComponent implements OnInit {
   filter: string;
   displayedCategories: Category[];
   activeCategory: Category;
-  @Input() activeCategoryId: number;
+  activeCategoryId: number;
   @Output() activeCategoryChange = new EventEmitter<Category>();
 
-  constructor(private planningService: PlanningService) {}
+  constructor(
+    private planningService: PlanningService,
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
+
+  openCreateDialog(): void {
+
+    const newCat = new Category();
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: newCat,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.createdCategory(result);
+    });
+  }
 
   ngOnInit() {
     this.loading = true;
     this.loadCategories().then(() => this.loading = false);
+    this.activeCategoryId = Number(this.route.snapshot.firstChild.params.categoryId);
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.activeCategoryId = Number(this.route.snapshot.firstChild.params.categoryId);
+        }
+      });
   }
 
   async loadCategories() {
@@ -52,11 +77,38 @@ export class CategoriesComponent implements OnInit {
         : this.categories;
   }
 
-  async createCategory(name: string) {
-    const category = await this.planningService.createCategory(name);
+  async createdCategory(category: Category) {
     await this.loadCategories();
     this.activateCategory(this.categories.find(c => c.id === category.id));
     this.filter = '';
     this.filterDisplayedCategories();
+  }
+}
+
+
+@Component({
+  selector: 'app-dialog-overview-example-dialog',
+  templateUrl: 'category-create-dialog.html',
+})
+// tslint:disable-next-line:component-class-suffix
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Category,
+    private planningService: PlanningService,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  async save() {
+    try {
+      const cat = await(this.planningService.createCategory(this.data.name));
+      this.dialogRef.close(cat);
+    } catch (e) {
+      alert(JSON.stringify(e.error.validations));
+    }
   }
 }

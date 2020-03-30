@@ -1,0 +1,22 @@
+.item-card {
+  margin: 10px 0;
+}
+.item-card-title {
+  color: darkslategrey;
+}
+
+.item-card-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 75ch;
+}
+
+.tags-container {
+}
+
+.tags-container .tag {
+  font-size: xx-small;
+  margin: 5px;
+  opacity: 50%;
+}

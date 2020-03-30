@@ -1,16 +1,3 @@
-<h4 *ngIf="category">{{category.name}}</h4>
-<div class="accordion" id="accordionExample">
-  <div *ngFor="let item of items" class="card">
-    <div class="card-header" id="heading{{item.id}}">
-      <h5 class="mb-0">
-        <button class="btn btn-link" type="button"
-                data-toggle="collapse"
-                aria-expanded="false"
-                (click)="viewItem(item.id)"
-        >
-          {{item.name}}
-        </button>
-      </h5>
-    </div>
-  </div>
-</div>
+<h2 *ngIf="category">{{category.name}}: Items:</h2>
+<button *ngIf="category" (click)="openCreateDialog()" mat-raised-button>Create Item</button>
+<app-item-card *ngFor="let item of items" [item]="item"></app-item-card>
