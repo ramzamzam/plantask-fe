@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Category, Item } from '../models/planning.models';
+import { Category, Item, List } from '../models/planning.models';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +49,14 @@ export class PlanningService {
     return this.http.post<Item>(this.url('item'), {
       name, description, tags, type, categoryId,
     }).toPromise();
+  }
+
+  async getItem(itemId: number): Promise<Item> {
+    return this.http.get<Item>(this.url('item', itemId)).toPromise();
+  }
+
+  async getLists(itemId: number): Promise<List[]> {
+    const params = { itemId: itemId.toString(10) };
+    return this.http.get<List[]>(this.url('list'), { params }).toPromise();
   }
 }

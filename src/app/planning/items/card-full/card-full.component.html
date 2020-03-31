@@ -1,0 +1,14 @@
+<mat-card *ngIf="item" class="item-card">
+  <mat-card-header>
+    <mat-card-title>
+      <a class="item-card-title">{{item.name}}</a>
+      <div class="tags-container">
+        <span class="tag" *ngFor="let tag of item.tags">#{{tag}}</span>
+      </div>
+    </mat-card-title>
+    <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
+<mat-divider></mat-divider>
+<h2>Lists:</h2>
+<app-list style="margin: 10px 10px 10px 40px;" *ngFor="let list of lists" [list]="list"></app-list>
