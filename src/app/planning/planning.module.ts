@@ -13,6 +13,7 @@ import { ItemCreateDialogComponent } from './items/dialogs/item.create.dialog';
 import { MatCardModule } from '@angular/material/card';
 import { CardFullComponent } from './items/card-full/card-full.component';
 import { ListComponent } from './items/list/list.component';
+import { ListCreateDialogComponent } from './items/list/list-create-dialog/list-create-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ListComponent } from './items/list/list.component';
     ItemCardComponent,
     ItemCreateDialogComponent,
     CardFullComponent,
-    ListComponent
+    ListComponent,
+    ListCreateDialogComponent
   ],
   imports: [
     FormsModule,

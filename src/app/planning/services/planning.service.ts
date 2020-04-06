@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Category, Item, List } from '../models/planning.models';
+import {Category, Item, List, ListItem} from '../models/planning.models';
+import {ProgressBarMode} from '@angular/material/progress-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +59,25 @@ export class PlanningService {
   async getLists(itemId: number): Promise<List[]> {
     const params = { itemId: itemId.toString(10) };
     return this.http.get<List[]>(this.url('list'), { params }).toPromise();
+  }
+
+  async createList(data: Partial<List>) {
+    const { itemId, name, tags, relationsType } = data;
+    return this.http.post<List>(this.url('list'), { itemId, name, tags, relationsType }).toPromise();
+  }
+
+  async updateListItems(list: List): Promise<ListItem[]> {
+    return this.http.put<ListItem[]>(
+      this.url('list', list.id) + '/items',
+      {
+        items: list.listItems.map(item => {
+          return {
+            label: item.label,
+            tags: item.tags,
+            isCompleted: item.isCompleted
+          };
+        }),
+      }
+    ).toPromise();
   }
 }

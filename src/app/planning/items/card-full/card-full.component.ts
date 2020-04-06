@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Item, List } from '../../models/planning.models';
+import { Item, List, ListRelationsType } from '../../models/planning.models';
 import { PlanningService } from '../../services/planning.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ListCreateDialogComponent } from '../list/list-create-dialog/list-create-dialog.component';
 
 @Component({
   selector: 'app-card-full',
@@ -16,6 +18,7 @@ export class CardFullComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private planningService: PlanningService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -24,8 +27,26 @@ export class CardFullComponent implements OnInit {
       const itemId = params.itemId;
       if (itemId != null) {
         this.item = await this.planningService.getItem(itemId);
-        this.lists = await this.planningService.getLists(itemId);
+        await this.loadLists();
       }
+    });
+  }
+
+  async loadLists() {
+    this.lists = await this.planningService.getLists(this.item.id);
+  }
+
+  createList() {
+    const list = new List();
+    list.itemId = this.item.id;
+    list.relationsType = ListRelationsType.UNORDERED;
+    const dialogRef = this.dialog.open(ListCreateDialogComponent, {
+      width: '400px',
+      data: list,
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      await this.loadLists();
     });
   }
 }

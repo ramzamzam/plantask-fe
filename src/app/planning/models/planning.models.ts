@@ -34,6 +34,13 @@ export class List extends BaseEntityModel {
 }
 
 export class ListItem extends BaseEntityModel {
+  constructor() {
+    super();
+    this.isCompleted = false;
+    this.label = '';
+    this.tags = [];
+  }
+
   label: string;
   isCompleted: boolean;
 }

@@ -1,20 +1,8 @@
 <h1 mat-dialog-title>Create Item</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <mat-label>Item Name</mat-label>
+    <mat-label>List Name</mat-label>
     <input matInput [(ngModel)]="data.name">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Item Type</mat-label>
-    <mat-select [(ngModel)]="data.type">
-      <mat-option *ngFor="let type of itemTypes" [value]="type.value">
-        {{type.title}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea [(ngModel)]="data.description" matInput placeholder="Type description here..."></textarea>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Tags:</mat-label>
