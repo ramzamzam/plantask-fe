@@ -50,10 +50,8 @@ export class ListComponent implements OnInit {
     }
   }
 
-
   showSaveResult(text: string) {
     this.saveresult = text;
     setTimeout(() => this.saveresult = '', 3000);
   }
-
 }

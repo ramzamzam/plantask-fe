@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CardFullComponent } from './items/card-full/card-full.component';
 import { ListComponent } from './items/list/list.component';
 import { ListCreateDialogComponent } from './items/list/list-create-dialog/list-create-dialog.component';
+import { TagsInputComponent } from './common/tags-input/tags-input.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ListCreateDialogComponent } from './items/list/list-create-dialog/list-
     ItemCreateDialogComponent,
     CardFullComponent,
     ListComponent,
-    ListCreateDialogComponent
+    ListCreateDialogComponent,
+    TagsInputComponent
   ],
   imports: [
     FormsModule,

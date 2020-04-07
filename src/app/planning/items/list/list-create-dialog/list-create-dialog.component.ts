@@ -29,15 +29,6 @@ export class ListCreateDialogComponent implements OnInit {
       alert(JSON.stringify(e.error.validations));
     }
   }
-  // TODO: extract tags logic to separate components
-  addTag() {
-    if (this.tag) { this.data.tags.push(this.tag); }
-    this.tag = null;
-  }
-
-  removeTag(tag: string) {
-    this.data.tags.splice(this.data.tags.indexOf(tag), 1);
-  }
 
   onNoClick(): void {
     this.dialogRef.close();

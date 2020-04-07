@@ -4,11 +4,7 @@
     <mat-label>List Name</mat-label>
     <input matInput [(ngModel)]="data.name">
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Tags:</mat-label>
-    <input matInput [(ngModel)]="tag" (keyup.enter)="addTag()">
-    <span class="remove-tag" *ngFor="let tag of data.tags" (click)="removeTag(tag)">{{tag}}</span>
-  </mat-form-field>
+  <app-tags-input name="tags" ngDefaultControl [(ngModel)]="data.tags"></app-tags-input>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

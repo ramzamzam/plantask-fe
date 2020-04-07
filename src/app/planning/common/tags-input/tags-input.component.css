@@ -1,0 +1,11 @@
+.remove-tag {
+  margin: 2px;
+}
+
+.remove-tag:hover {
+  text-decoration: line-through;
+}
+
+.mat-form-field {
+  width: 100%;
+}

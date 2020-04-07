@@ -16,11 +16,7 @@
     <mat-label>Description</mat-label>
     <textarea [(ngModel)]="data.description" matInput placeholder="Type description here..."></textarea>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Tags:</mat-label>
-    <input matInput [(ngModel)]="tag" (keyup.enter)="addTag()">
-    <span class="remove-tag" *ngFor="let tag of data.tags" (click)="removeTag(tag)">{{tag}}</span>
-  </mat-form-field>
+  <app-tags-input [(ngModel)]="data.tags"></app-tags-input>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

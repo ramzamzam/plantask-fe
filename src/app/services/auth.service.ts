@@ -27,7 +27,6 @@ export class AuthService {
   login(email, password) {
     return this.http.post<AuthenticatedUserDTO>(`${environment.apiUrl}/auth/login`, { email, password })
       .pipe(map(userDTO => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(userDTO));
         console.log(this.jwtDecode(userDTO.accessToken));
         this.currentUserSubject.next(userDTO);
@@ -36,7 +35,6 @@ export class AuthService {
   }
 
   logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
