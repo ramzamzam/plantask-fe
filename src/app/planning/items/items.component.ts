@@ -17,7 +17,6 @@ export class ItemsComponent implements OnInit {
 
   constructor(
     private planningService: PlanningService,
-    private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
   ) { }
@@ -38,17 +37,10 @@ export class ItemsComponent implements OnInit {
     this.items = await this.planningService.getItems(categoryId);
   }
 
-  viewItem(id: number) {
-    this.router.navigate(['planning/item', id]);
-  }
-
-  openCreateDialog(): void {
-
-    const newCat = new Item();
-    newCat.categoryId = this.category.id;
+  showCreateOrUpdateDialog(item?: Item): void {
     const dialogRef = this.dialog.open(ItemCreateDialogComponent, {
       width: '400px',
-      data: newCat,
+      data: item || new Item({ categoryId: this.category.id }),
     });
 
     dialogRef.afterClosed().subscribe(async result => {

@@ -1,6 +1,7 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { List, ListItem } from '../../models/planning.models';
 import { PlanningService } from '../../services/planning.service';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list',
@@ -8,9 +9,15 @@ import { PlanningService } from '../../services/planning.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  icons = {
+    faPen
+  };
+
   @ViewChildren('liinput') rows: QueryList<ElementRef>;
   @Input() list: List;
+  @Output() edit = new EventEmitter<List>();
   saveresult = '';
+
   constructor(
     private planningService: PlanningService
   ) { }
@@ -53,5 +60,9 @@ export class ListComponent implements OnInit {
   showSaveResult(text: string) {
     this.saveresult = text;
     setTimeout(() => this.saveresult = '', 3000);
+  }
+
+  emitEdit() {
+    this.edit.emit(this.list);
   }
 }

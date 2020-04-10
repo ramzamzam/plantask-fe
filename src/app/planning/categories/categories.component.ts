@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { PlanningService } from '../services/planning.service';
 import { Category } from '../models/planning.models';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class CategoriesComponent implements OnInit {
   icons = {
-    faPlus,
+    faPen,
   };
   loading = false;
   categories: Category[];
@@ -29,12 +29,12 @@ export class CategoriesComponent implements OnInit {
     private router: Router,
   ) {}
 
-  openCreateDialog(): void {
+  openCreateDialog(category?: Category): void {
 
-    const newCat = new Category();
+    const editCat = category || new Category();
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px',
-      data: newCat,
+      data: editCat,
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -83,6 +83,10 @@ export class CategoriesComponent implements OnInit {
     this.filter = '';
     this.filterDisplayedCategories();
   }
+
+  editCategory(cat: Category) {
+    this.openCreateDialog(cat);
+  }
 }
 
 
@@ -105,7 +109,7 @@ export class DialogOverviewExampleDialog {
 
   async save() {
     try {
-      const cat = await(this.planningService.createCategory(this.data.name));
+      const cat = await(this.planningService.createOrUpdateCategory(this.data));
       this.dialogRef.close(cat);
     } catch (e) {
       alert(JSON.stringify(e.error.validations));

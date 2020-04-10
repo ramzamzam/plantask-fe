@@ -10,5 +10,5 @@
   </mat-card-header>
 </mat-card>
 <mat-divider></mat-divider>
-<h2>Lists:</h2><button mat-button (click)="createList()">Create new List</button>
-<app-list style="margin: 10px 10px 10px 40px;" *ngFor="let list of lists" [list]="list"></app-list>
+<h2>Lists:</h2><button mat-raised-button (click)="showListEditCreateDialog()">Create new List</button>
+<app-list style="margin: 10px 10px 10px 40px;" *ngFor="let list of lists" [list]="list" (edit)="showListEditCreateDialog($event)"></app-list>

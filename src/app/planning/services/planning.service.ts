@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {Category, Item, List, ListItem} from '../models/planning.models';
-import {ProgressBarMode} from '@angular/material/progress-bar';
+import { Category, Item, List, ListItem } from '../models/planning.models';
 
 @Injectable({
   providedIn: 'root'
@@ -35,21 +34,27 @@ export class PlanningService {
       .toPromise();
   }
 
-  async createCategory(name: string): Promise<Category> {
-    return this.http.post<Category>(this.url('category'), {
-      name
-    }).toPromise();
+  async createCategory(data: Partial<Category>): Promise<Category> {
+    return this.http.post<Category>(this.url('category'), data).toPromise();
+  }
+
+  async updateCategory(data: Category): Promise<Category> {
+    return this.http.patch<Category>(this.url('category', data.id), data).toPromise();
   }
 
   async getCategory(categoryId: number): Promise<Category> {
     return this.http.get<Category>(this.url('category', categoryId)).toPromise();
   }
 
-  createItem(itemAttrs: Partial<Item>): Promise<Item> {
+  async createItem(itemAttrs: Partial<Item>): Promise<Item> {
     const { name, description, tags, type, categoryId } = itemAttrs;
     return this.http.post<Item>(this.url('item'), {
       name, description, tags, type, categoryId,
     }).toPromise();
+  }
+
+  private updateItem(data: Item): Promise<Item> {
+    return this.http.patch<Item>(this.url('item', data.id), data).toPromise();
   }
 
   async getItem(itemId: number): Promise<Item> {
@@ -61,9 +66,13 @@ export class PlanningService {
     return this.http.get<List[]>(this.url('list'), { params }).toPromise();
   }
 
-  async createList(data: Partial<List>) {
+  async createList(data: Partial<List>): Promise<List> {
     const { itemId, name, tags, relationsType } = data;
     return this.http.post<List>(this.url('list'), { itemId, name, tags, relationsType }).toPromise();
+  }
+
+  async updateList(data: List): Promise<List> {
+    return this.http.patch<List>(this.url('list', data.id), data).toPromise();
   }
 
   async updateListItems(list: List): Promise<ListItem[]> {
@@ -79,5 +88,20 @@ export class PlanningService {
         }),
       }
     ).toPromise();
+  }
+
+  async createOrUpdateCategory(data: Category): Promise<Category> {
+    if (data.id) { return this.updateCategory(data); }
+    return this.createCategory(data);
+  }
+
+  async createOrUpdateItem(data: Item): Promise<Item> {
+    if (data.id) { return this.updateItem(data); }
+    return this.createItem(data);
+  }
+
+  async createOrUpdateList(data: List) {
+    if (data.id) { return this.updateList(data); }
+    return this.createList(data);
   }
 }

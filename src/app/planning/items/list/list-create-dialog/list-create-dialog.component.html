@@ -1,4 +1,5 @@
-<h1 mat-dialog-title>Create Item</h1>
+<h1 mat-dialog-title *ngIf="!data.id">Create List</h1>
+<h1 mat-dialog-title *ngIf="data.id">Edit List</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>List Name</mat-label>

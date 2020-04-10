@@ -19,6 +19,11 @@ export class Item extends BaseEntityModel {
   description: string;
   type: ItemType;
   categoryId: number;
+
+  constructor(params: Partial<Item> = {}) {
+    super();
+    Object.assign(this, params);
+  }
 }
 
 export enum ListRelationsType {
@@ -31,16 +36,21 @@ export class List extends BaseEntityModel {
   relationsType: ListRelationsType;
   itemId: number;
   listItems?: ListItem[];
+
+  constructor(params: Partial<List>) {
+    super();
+    Object.assign(this, params);
+  }
 }
 
 export class ListItem extends BaseEntityModel {
+  label: string;
+  isCompleted: boolean;
+
   constructor() {
     super();
     this.isCompleted = false;
     this.label = '';
     this.tags = [];
   }
-
-  label: string;
-  isCompleted: boolean;
 }

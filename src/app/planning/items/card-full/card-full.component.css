@@ -1,0 +1,8 @@
+.tags-container {
+}
+
+.tags-container .tag {
+  font-size: xx-small;
+  margin: 5px;
+  color: lightslategray;
+}

@@ -1,4 +1,5 @@
-<h1 mat-dialog-title>Create category</h1>
+<h1 mat-dialog-title *ngIf="!data.id">Create category</h1>
+<h1 mat-dialog-title *ngIf="data.id">Edit category</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>New Category Name</mat-label>

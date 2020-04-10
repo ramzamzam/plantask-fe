@@ -20,3 +20,15 @@
   color: #495057;
   border-color: #dae0e5;
 }
+
+.list-group-item:hover,
+.list-group-item.active .edit-button {
+  display: block;
+}
+
+.edit-button {
+  background: none;
+  border:none;
+  display: none;
+  cursor: pointer;
+}

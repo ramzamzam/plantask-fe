@@ -23,7 +23,7 @@ export class ListCreateDialogComponent implements OnInit {
 
   async save() {
     try {
-      const list = await this.planningService.createList(this.data);
+      const list = await this.planningService.createOrUpdateList(this.data);
       this.dialogRef.close(list);
     } catch (e) {
       alert(JSON.stringify(e.error.validations));

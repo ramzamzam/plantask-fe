@@ -36,13 +36,10 @@ export class CardFullComponent implements OnInit {
     this.lists = await this.planningService.getLists(this.item.id);
   }
 
-  createList() {
-    const list = new List();
-    list.itemId = this.item.id;
-    list.relationsType = ListRelationsType.UNORDERED;
+  showListEditCreateDialog(list?: List) {
     const dialogRef = this.dialog.open(ListCreateDialogComponent, {
       width: '400px',
-      data: list,
+      data: list || new List({ itemId: this.item.id, relationsType: ListRelationsType.UNORDERED }),
     });
 
     dialogRef.afterClosed().subscribe(async result => {

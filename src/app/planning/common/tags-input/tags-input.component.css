@@ -1,5 +1,6 @@
 .remove-tag {
   margin: 2px;
+  color: lightslategray;
 }
 
 .remove-tag:hover {
@@ -8,4 +9,8 @@
 
 .mat-form-field {
   width: 100%;
+}
+
+.row {
+  margin: 0;
 }

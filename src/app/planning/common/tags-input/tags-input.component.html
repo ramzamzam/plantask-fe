@@ -1,5 +1,5 @@
 <mat-form-field>
   <mat-label>Tags:</mat-label>
   <input matInput [(ngModel)]="tag" (keyup.enter)="addTag()">
-  <span class="remove-tag" *ngFor="let tag of tags" (click)="removeTag(tag)">#{{tag}}</span>
+  <div class="row"><span class="remove-tag" *ngFor="let tag of tags" (click)="removeTag(tag)">#{{tag}}</span></div>
 </mat-form-field>
