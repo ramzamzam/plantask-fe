@@ -19,6 +19,7 @@ export class TagsInputComponent implements ControlValueAccessor {
   constructor() { }
 
   addTag() {
+    this.tag = this.tag.trim();
     if (this.tag) {
       this.tags.push(this.tag);
       this.onChange(this.tags);

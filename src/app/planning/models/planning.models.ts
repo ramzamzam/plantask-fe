@@ -54,3 +54,8 @@ export class ListItem extends BaseEntityModel {
     this.tags = [];
   }
 }
+export enum EntityBaseUrl {
+  Category = 'category',
+  Item = 'item',
+  List = 'list',
+}

@@ -22,13 +22,17 @@
 }
 
 .list-group-item:hover,
-.list-group-item.active .edit-button {
+.list-group-item.active .edit-buttons-container {
   display: block;
+}
+
+.edit-buttons-container {
+  margin-left: auto;
+  display: none;
 }
 
 .edit-button {
   background: none;
   border:none;
-  display: none;
   cursor: pointer;
 }

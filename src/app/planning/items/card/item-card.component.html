@@ -7,6 +7,9 @@
       </div>
     </mat-card-title>
     <mat-card-subtitle class="item-card-subtitle">{{item.description}}</mat-card-subtitle>
-    <fa-icon [icon]="icons.faPen" class="edit-icon" (click)="emitEdit()"></fa-icon>
+    <div class="edit-icons-container">
+      <fa-icon [icon]="icons.faPen" class="edit-icon" (click)="emitEdit()"></fa-icon>
+      <fa-icon [icon]="icons.faTrash" class="edit-icon" (click)="emitDelete()"></fa-icon>
+    </div>
   </mat-card-header>
 </mat-card>

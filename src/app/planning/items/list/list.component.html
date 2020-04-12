@@ -6,8 +6,10 @@
         <span class="tag" *ngFor="let tag of list.tags">#{{tag}}</span>
       </div>
     </mat-card-title>
-    <fa-icon [icon]="icons.faPen" class="edit-icon" (click)="emitEdit()"></fa-icon>
-  </mat-card-header>
+    <div class="edit-icons-container">
+      <fa-icon [icon]="icons.faPen" class="edit-icon" (click)="emitEdit()"></fa-icon>
+      <fa-icon [icon]="icons.faTrash" class="edit-icon" (click)="emitDelete()"></fa-icon>
+    </div>  </mat-card-header>
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let li of list.listItems; let i = index">

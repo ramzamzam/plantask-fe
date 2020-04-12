@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { PlanningService } from '../services/planning.service';
-import { Category } from '../models/planning.models';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Category, EntityBaseUrl } from '../models/planning.models';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {DeleteEntityDialogComponent} from '../common/confirm.prompt.dialog/delete-entity-dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -13,6 +14,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class CategoriesComponent implements OnInit {
   icons = {
     faPen,
+    faTrash,
   };
   loading = false;
   categories: Category[];
@@ -86,6 +88,17 @@ export class CategoriesComponent implements OnInit {
 
   editCategory(cat: Category) {
     this.openCreateDialog(cat);
+  }
+
+  async deleteCategory(cat: Category) {
+    try {
+      await this.planningService.deleteEntity(cat, EntityBaseUrl.Category);
+      await this.loadCategories();
+      await this.router.navigate(['/planning']);
+    } catch (e) {
+      // TODO: Fix this
+      alert(e);
+    }
   }
 }
 

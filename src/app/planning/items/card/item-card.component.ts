@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../../models/planning.models';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import {faPen, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-item-card',
@@ -9,16 +9,27 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 })
 export class ItemCardComponent implements OnInit {
   icons = {
-    faPen
+    faPen,
+    faTrash,
   };
   @Input() item: Item;
-  @Output() edit = new EventEmitter<Item>();
+  @Output() action = new EventEmitter<{action: string, data: Item}>();
   constructor() {}
 
   ngOnInit(): void {
   }
 
   emitEdit() {
-    this.edit.emit(this.item);
+    this.action.emit({
+      action: 'edit',
+      data: this.item,
+    });
+  }
+
+  emitDelete() {
+    this.action.emit({
+      action: 'delete',
+      data: this.item,
+    });
   }
 }

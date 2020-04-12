@@ -5,8 +5,12 @@
     (click)="activateCategory(cat)"
     [ngClass]="activeCategoryId==cat.id? 'active' : null"
     class="list-group-item list-group-item-action"
+    title="{{cat.name}}"
   >
     {{cat.name}}
-    <button class="edit-button float-right" (click)="editCategory(cat)"><fa-icon [icon]="icons.faPen"></fa-icon></button>
+    <div class="edit-buttons-container float-right">
+      <button class="edit-button" (click)="editCategory(cat)"><fa-icon [icon]="icons.faPen"></fa-icon></button>
+      <button class="edit-button" (click)="deleteCategory(cat)"><fa-icon [icon]="icons.faTrash"></fa-icon></button>
+    </div>
   </a>
 </div>

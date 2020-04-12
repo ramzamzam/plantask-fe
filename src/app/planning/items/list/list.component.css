@@ -16,7 +16,11 @@
 }
 
 
+.edit-icons-container {
+  margin-left: auto;
+}
+
 .edit-icon {
   cursor: pointer;
-  margin-left: auto;
+  margin-left:10px
 }

@@ -15,6 +15,7 @@ import { CardFullComponent } from './items/card-full/card-full.component';
 import { ListComponent } from './items/list/list.component';
 import { ListCreateDialogComponent } from './items/list/list-create-dialog/list-create-dialog.component';
 import { TagsInputComponent } from './common/tags-input/tags-input.component';
+import { DeleteEntityDialogComponent } from './common/confirm.prompt.dialog/delete-entity-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TagsInputComponent } from './common/tags-input/tags-input.component';
     CardFullComponent,
     ListComponent,
     ListCreateDialogComponent,
-    TagsInputComponent
+    TagsInputComponent,
+    DeleteEntityDialogComponent,
   ],
   imports: [
     FormsModule,

@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { List, ListItem } from '../../models/planning.models';
 import { PlanningService } from '../../services/planning.service';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list',
@@ -10,12 +10,16 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 })
 export class ListComponent implements OnInit {
   icons = {
-    faPen
+    faPen,
+    faTrash,
   };
 
   @ViewChildren('liinput') rows: QueryList<ElementRef>;
   @Input() list: List;
-  @Output() edit = new EventEmitter<List>();
+  @Output() action = new EventEmitter<{
+    action: string,
+    data: List
+  }>();
   saveresult = '';
 
   constructor(
@@ -63,6 +67,16 @@ export class ListComponent implements OnInit {
   }
 
   emitEdit() {
-    this.edit.emit(this.list);
+    this.action.emit({
+      action: 'edit',
+      data: this.list,
+    });
+  }
+
+  emitDelete() {
+    this.action.emit({
+      action: 'delete',
+      data: this.list,
+    });
   }
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Item, List, ListRelationsType } from '../../models/planning.models';
-import { PlanningService } from '../../services/planning.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ListCreateDialogComponent } from '../list/list-create-dialog/list-create-dialog.component';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {EntityBaseUrl, Item, List, ListRelationsType} from '../../models/planning.models';
+import {PlanningService} from '../../services/planning.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ListCreateDialogComponent} from '../list/list-create-dialog/list-create-dialog.component';
 
 @Component({
   selector: 'app-card-full',
@@ -45,5 +45,19 @@ export class CardFullComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       await this.loadLists();
     });
+  }
+
+  async deleteList(list: List) {
+    try {
+      await this.planningService.deleteEntity(list, EntityBaseUrl.List);
+      await this.loadLists();
+    } catch (e) {
+      alert(JSON.stringify(e));
+    }
+  }
+
+  dispatchListAction($event: { action: string; data: List }) {
+    if ($event.action === 'edit') { return this.showListEditCreateDialog($event.data); }
+    if ($event.action === 'delete') { return this.deleteList($event.data); }
   }
 }

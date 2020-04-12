@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Category, Item, List, ListItem } from '../models/planning.models';
+import {BaseEntityModel, Category, EntityBaseUrl, Item, List, ListItem} from '../models/planning.models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class PlanningService {
   }
 
   getCategories(): Promise<Category[]> {
-    return this.http.get<Category[]>(this.url('category')).toPromise();
+    return this.http.get<Category[]>(this.url(EntityBaseUrl.Category)).toPromise();
   }
 
 
@@ -30,54 +30,54 @@ export class PlanningService {
         categoryId: categoryId.toString(10),
       };
     }
-    return this.http.get<Item[]>(this.url('item'), { params })
+    return this.http.get<Item[]>(this.url(EntityBaseUrl.Item), { params })
       .toPromise();
   }
 
   async createCategory(data: Partial<Category>): Promise<Category> {
-    return this.http.post<Category>(this.url('category'), data).toPromise();
+    return this.http.post<Category>(this.url(EntityBaseUrl.Category), data).toPromise();
   }
 
   async updateCategory(data: Category): Promise<Category> {
-    return this.http.patch<Category>(this.url('category', data.id), data).toPromise();
+    return this.http.patch<Category>(this.url(EntityBaseUrl.Category, data.id), data).toPromise();
   }
 
   async getCategory(categoryId: number): Promise<Category> {
-    return this.http.get<Category>(this.url('category', categoryId)).toPromise();
+    return this.http.get<Category>(this.url(EntityBaseUrl.Category, categoryId)).toPromise();
   }
 
   async createItem(itemAttrs: Partial<Item>): Promise<Item> {
     const { name, description, tags, type, categoryId } = itemAttrs;
-    return this.http.post<Item>(this.url('item'), {
+    return this.http.post<Item>(this.url(EntityBaseUrl.Item), {
       name, description, tags, type, categoryId,
     }).toPromise();
   }
 
   private updateItem(data: Item): Promise<Item> {
-    return this.http.patch<Item>(this.url('item', data.id), data).toPromise();
+    return this.http.patch<Item>(this.url(EntityBaseUrl.Item, data.id), data).toPromise();
   }
 
   async getItem(itemId: number): Promise<Item> {
-    return this.http.get<Item>(this.url('item', itemId)).toPromise();
+    return this.http.get<Item>(this.url(EntityBaseUrl.Item, itemId)).toPromise();
   }
 
   async getLists(itemId: number): Promise<List[]> {
     const params = { itemId: itemId.toString(10) };
-    return this.http.get<List[]>(this.url('list'), { params }).toPromise();
+    return this.http.get<List[]>(this.url(EntityBaseUrl.List), { params }).toPromise();
   }
 
   async createList(data: Partial<List>): Promise<List> {
     const { itemId, name, tags, relationsType } = data;
-    return this.http.post<List>(this.url('list'), { itemId, name, tags, relationsType }).toPromise();
+    return this.http.post<List>(this.url(EntityBaseUrl.List), { itemId, name, tags, relationsType }).toPromise();
   }
 
   async updateList(data: List): Promise<List> {
-    return this.http.patch<List>(this.url('list', data.id), data).toPromise();
+    return this.http.patch<List>(this.url(EntityBaseUrl.List, data.id), data).toPromise();
   }
 
   async updateListItems(list: List): Promise<ListItem[]> {
     return this.http.put<ListItem[]>(
-      this.url('list', list.id) + '/items',
+      this.url(EntityBaseUrl.List, list.id) + '/items',
       {
         items: list.listItems.map(item => {
           return {
@@ -103,5 +103,9 @@ export class PlanningService {
   async createOrUpdateList(data: List) {
     if (data.id) { return this.updateList(data); }
     return this.createList(data);
+  }
+
+  async deleteEntity<T extends BaseEntityModel>(data: T, entityBaseUrl: EntityBaseUrl): Promise<any> {
+    return this.http.delete<any>(this.url(entityBaseUrl, data.id)).toPromise();
   }
 }
