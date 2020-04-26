@@ -16,7 +16,7 @@ export enum ItemType {
 
 export class Item extends BaseEntityModel {
   name: string;
-  description: string;
+  description = '';
   type: ItemType;
   categoryId: number;
 

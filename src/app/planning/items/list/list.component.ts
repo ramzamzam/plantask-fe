@@ -2,6 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, 
 import { List, ListItem } from '../../models/planning.models';
 import { PlanningService } from '../../services/planning.service';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { BehaviorSubject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -9,6 +11,8 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  changeEvents: BehaviorSubject<any>;
+
   icons = {
     faPen,
     faTrash,
@@ -26,14 +30,23 @@ export class ListComponent implements OnInit {
     private planningService: PlanningService
   ) { }
 
+  emitChange() {
+    this.changeEvents.next(true);
+  }
+
   ngOnInit(): void {
     if(!this.list.listItems.length) { this.list.listItems = [new ListItem()]; }
+    this.changeEvents = new BehaviorSubject<boolean>(false);
+    this.changeEvents.pipe(debounceTime(1000)).subscribe((value) => {
+      if(value) { this.save(); }
+    });
   }
 
   createNewAfter(li: ListItem) {
     const currentIndex = this.list.listItems.indexOf(li);
     this.list.listItems.splice(currentIndex + 1, 0, new ListItem());
     setTimeout(() => this.rows.toArray()[currentIndex + 1].nativeElement.focus(), 0);
+    this.emitChange();
   }
 
   removeItem(li: ListItem) {
@@ -50,6 +63,7 @@ export class ListComponent implements OnInit {
         inputs[currentIndex - 1].nativeElement.focus();
       }
     },0);
+    this.emitChange();
   }
 
   async save() {
