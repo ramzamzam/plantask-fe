@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { AuthenticatedUserDTO } from '../models/user.model';
+import { AuthenticatedUserDTO, UserRegisterDTO, UserSafeAttributes } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +37,11 @@ export class AuthService {
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  register(data: UserRegisterDTO) {
+    return this.http.post<UserSafeAttributes>(`${environment.apiUrl}/user`, data)
+      .toPromise();
   }
 
   jwtDecode(t) {

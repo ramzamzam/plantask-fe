@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {PlanningService} from '../services/planning.service';
-import {Category, EntityBaseUrl, Item} from '../models/planning.models';
-import {ActivatedRoute} from '@angular/router';
-import {ItemCreateDialogComponent} from './dialogs/item.create.dialog';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { PlanningService } from '../services/planning.service';
+import { Category, EntityBaseUrl, Item } from '../models/planning.models';
+import { ActivatedRoute } from '@angular/router';
+import { ItemCreateDialogComponent } from './dialogs/item.create.dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-items',

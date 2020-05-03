@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {EntityBaseUrl, Item, List, ListRelationsType} from '../../models/planning.models';
-import {PlanningService} from '../../services/planning.service';
-import {MatDialog} from '@angular/material/dialog';
-import {ListCreateDialogComponent} from '../list/list-create-dialog/list-create-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EntityBaseUrl, Item, List, ListRelationsType } from '../../models/planning.models';
+import { PlanningService } from '../../services/planning.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ListCreateDialogComponent } from '../list/list-create-dialog/list-create-dialog.component';
 
 @Component({
   selector: 'app-card-full',

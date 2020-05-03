@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {BaseEntityModel, Category, EntityBaseUrl, Item, List, ListItem} from '../models/planning.models';
+import { BaseEntityModel, Category, EntityBaseUrl, Item, List, ListItem } from '../models/planning.models';
 
 @Injectable({
   providedIn: 'root'

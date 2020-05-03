@@ -10,3 +10,17 @@ export class AuthenticatedUserDTO {
   refreshToken: string;
   user: User;
 }
+
+export class UserRegisterDTO {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export class UserSafeAttributes {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+}

@@ -4,7 +4,6 @@ import { Category, EntityBaseUrl } from '../models/planning.models';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import {DeleteEntityDialogComponent} from '../common/confirm.prompt.dialog/delete-entity-dialog.component';
 
 @Component({
   selector: 'app-categories',
