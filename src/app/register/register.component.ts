@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  error: string;
+  errors: string[];
   user: UserSafeAttributes;
 
   constructor(
@@ -50,6 +50,10 @@ export class RegisterComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/planning';
   }
 
+  navigateToLogin(timeout) {
+    setTimeout(() => this.router.navigate(['/login']), timeout);
+  }
+
   get f() { return this.registerForm.controls; }
 
   async onSubmit() {
@@ -64,19 +68,20 @@ export class RegisterComponent implements OnInit {
     try {
       this.user = await this.authService.register(formToObject(this.f) as UserRegisterDTO);
       this.loading = false;
+      this.navigateToLogin(2000);
     } catch (err) {
       this.loading = false;
       if (err.error.validations) {
-        this.error = this.getValidationErrors(err.error.validations);
+        this.errors = this.getValidationErrors(err.error.validations);
       } else {
-       this.error = err.error.message;
+       this.errors = [err.error.message];
       }
     }
   }
 
-  getValidationErrors(validations) {
+  getValidationErrors(validations): string[] {
     if (!validations) { return; }
     // @ts-ignore
-    return (Object.values(validations) as Array<any>).flat().join('\n');
+    return (Object.values(validations) as string[]).flat();
   }
 }

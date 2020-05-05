@@ -24,7 +24,6 @@ export class ListComponent implements OnInit {
     action: string,
     data: List
   }>();
-  saveresult = '';
 
   constructor(
     private planningService: PlanningService
@@ -68,16 +67,10 @@ export class ListComponent implements OnInit {
 
   async save() {
     try {
-      this.list.listItems = await this.planningService.updateListItems(this.list);
-      this.showSaveResult('Saved');
+      await this.planningService.updateListItems(this.list);
     } catch (e) {
       alert(JSON.stringify(e));
     }
-  }
-
-  showSaveResult(text: string) {
-    this.saveresult = text;
-    setTimeout(() => this.saveresult = '', 3000);
   }
 
   emitEdit() {
