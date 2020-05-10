@@ -5,7 +5,7 @@ export function getValue(mappingObject: object = {}, key: string, obj: object): 
   return obj[ mappingObject[key] || key ];
 }
 
-export function assignErrorsToFormControls(controls: IFormContorls, validationErrors: object, formToResMapperObject?: object) {
+export function assignValidationErrorsToFormControls(controls: IFormContorls, validationErrors: object, formToResMapperObject?: object) {
   _.each(controls, (control, name) => {
     if(validationErrors[name]) {
       if (!control.errors) {

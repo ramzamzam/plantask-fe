@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserRegisterDTO, UserSafeAttributes } from '../models/user.model';
-import { assignErrorsToFormControls, formToObject } from '../utils/form.utils';
+import { assignValidationErrorsToFormControls, formToObject } from '../utils/form.utils';
 
 
 @Component({
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
     } catch (err) {
       if (err.error.validations) {
         this.errors = null;
-        assignErrorsToFormControls(this.f, err.error.validations);
+        assignValidationErrorsToFormControls(this.f, err.error.validations);
       } else {
        this.errors = [err.error.message];
       }
