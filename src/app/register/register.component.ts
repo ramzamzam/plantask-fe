@@ -1,20 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserRegisterDTO, UserSafeAttributes } from '../models/user.model';
+import { assignErrorsToFormControls, formToObject } from '../utils/form.utils';
 
-const formToObject = (f: { [key: string]: AbstractControl; }) => {
-  return Object.keys(f).reduce((acc, key) => {
-    acc[key] = f[key].value;
-    return acc;
-  }, {});
-};
-/*
- TODO: Rewrite this component and change the way validations are displayed
- This is fast write-up just to make registration process available for
- testing other pages
- */
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -67,21 +58,16 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
     try {
       this.user = await this.authService.register(formToObject(this.f) as UserRegisterDTO);
-      this.loading = false;
       this.navigateToLogin(2000);
     } catch (err) {
-      this.loading = false;
       if (err.error.validations) {
-        this.errors = this.getValidationErrors(err.error.validations);
+        this.errors = null;
+        assignErrorsToFormControls(this.f, err.error.validations);
       } else {
        this.errors = [err.error.message];
       }
+    } finally {
+      this.loading = false;
     }
-  }
-
-  getValidationErrors(validations): string[] {
-    if (!validations) { return; }
-    // @ts-ignore
-    return (Object.values(validations) as string[]).flat();
   }
 }
